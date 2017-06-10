@@ -23,8 +23,8 @@ http://localhost:8080/source-services to http://localhost/source-services and
 http://localhost:8090/source-apps to http://localhost/source-apps.
 
 ```bash
-sudo docker run -e OPENGROK_WEBAPP_CONTEXT=source-apps -i --restart=unless-stopped --name=opengrok_apps -v /data/src-apps:/data:ro,Z -p 127.0.0.1:8090:8080 -t vertu20140207/opengrok:latest
-sudo docker run -e OPENGROK_WEBAPP_CONTEXT=source-services -i --restart=unless-stopped --name=opengrok_services -v /data/src-services:/data:ro,Z -p 127.0.0.1:8080:8080 -t vertu20140207/opengrok:latest
+sudo docker run -e OPENGROK_WEBAPP_CONTEXT=source-apps -i --restart=unless-stopped --name=opengrok_apps -v /data/src-apps:/data:ro,Z -p 127.0.0.1:8090:8080 -t blanboom/opengrok:latest
+sudo docker run -e OPENGROK_WEBAPP_CONTEXT=source-services -i --restart=unless-stopped --name=opengrok_services -v /data/src-services:/data:ro,Z -p 127.0.0.1:8080:8080 -t blanboom/opengrok:latest
 ```
 
 ## Example re-indexing
