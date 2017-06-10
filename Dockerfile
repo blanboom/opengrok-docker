@@ -21,7 +21,7 @@ RUN apt-get update \
     && tar xaf ${OPENGROKVERSION}.tar.gz \
     && useradd -m tomcat \
     && echo "tomcat:builder" | chpasswd \
-    && echo "00 10 * * 1-5 /usr/local/tomcat/${OPENGROKVERSION}/bin/OpenGrok index /data" >> crontab \
+    && echo "00 10 * * 1-5 /usr/local/tomcat/${OPENGROKVERSION}/bin/OpenGrok index /source" >> crontab \
     && crontab -u tomcat crontab \
     && echo "tomcat ALL=NOPASSWD: /usr/sbin/service cron start" >> /etc/sudoers.d/cron \
     && mkdir /var/opengrok \
@@ -30,12 +30,12 @@ RUN apt-get update \
     && echo done
 
 COPY run_tests.sh /usr/local/tomcat/
-VOLUME /data
+VOLUME /source
 USER tomcat
 CMD ${OPENGROKVERSION}/bin/OpenGrok deploy \
     && find webapps -maxdepth 1 -name source* -execdir \
         sh -c 'mv -u $(basename {}) $(echo $(basename {}) | sed s/source/${OPENGROK_WEBAPP_CONTEXT:-source}/)' \; \
-    && ${OPENGROKVERSION}/bin/OpenGrok index /data \
+    && ${OPENGROKVERSION}/bin/OpenGrok index /source \
     && sudo service cron start \
     && catalina.sh run
 
